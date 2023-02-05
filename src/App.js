@@ -1,14 +1,20 @@
 import { useEffect } from "react";
 import "./App.css";
 import Home from "./pages/Home";
+import Login from "./pages/Login";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { store } from "./store";
+import { Provider } from "react-redux";
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Login />} />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   );
 }
 

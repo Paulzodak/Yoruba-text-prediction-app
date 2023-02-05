@@ -1,6 +1,8 @@
 import React from "react";
 import Btn from "../atom/Btn";
 import { MdAdd as AddIcon } from "react-icons/md";
+import { useSignInWithGoogle } from "react-firebase-hooks/auth";
+import { auth } from "../../firestore";
 const SideNav = () => {
   return (
     <div className=" my-[0.5rem]">

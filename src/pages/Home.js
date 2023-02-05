@@ -4,9 +4,23 @@ import { SlNote } from "react-icons/sl";
 import SideNav from "../components/organisms/SideNav";
 import Loader from "../components/molecules/Loader";
 import Nav from "../components/organisms/Nav";
+import { getProducts } from "../slices/userSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firestore";
 const Home = () => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
   const [loading, setLoading] = useState(true);
+  console.log(user);
   useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        dispatch(getProducts(user.uid));
+      } else if (!user) {
+      }
+    });
+
     setTimeout(() => {
       setLoading(false);
     }, 2000);
