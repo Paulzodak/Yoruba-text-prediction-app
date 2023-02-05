@@ -1,7 +1,15 @@
 import { useEffect } from "react";
-
+import "./App.css";
+import Home from "./pages/Home";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 function App() {
-  return <div className="bg-[blue]">wdw</div>;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;
