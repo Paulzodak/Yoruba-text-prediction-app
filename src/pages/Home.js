@@ -4,19 +4,30 @@ import { SlNote } from "react-icons/sl";
 import SideNav from "../components/organisms/SideNav";
 import Loader from "../components/molecules/Loader";
 import Nav from "../components/organisms/Nav";
-import { getProducts } from "../slices/userSlice";
+import { getUser } from "../slices/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firestore";
+import Utility from "../components/organisms/Utility";
+import { getNotes } from "../slices/notesSlice";
+import { collection, doc, onSnapshot, query } from "firebase/firestore";
+import { db } from "../firestore";
 const Home = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const [loading, setLoading] = useState(true);
-  console.log(user);
+  // console.log(user);
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        dispatch(getProducts(user.uid));
+        dispatch(getUser(user.uid));
+
+        const colRef = collection(db, "notes");
+        const docRef = doc(db, "notes", user.uid);
+        const q = query(docRef, user.uid);
+        onSnapshot(q, () => {
+          dispatch(getNotes(user.uid));
+        });
       } else if (!user) {
       }
     });
@@ -36,11 +47,14 @@ const Home = () => {
         {/* </div> */}
       </div>
       <div className="grid grid-cols-[30%_70%] h-full">
-        <div className="border-[#F1F1F1] border-2 h-full">
+        <div className="border-borderGrey border-2 h-full">
           <SideNav />
         </div>
-        <div className="border-[#F1F1F1] border-2 h-full">
+        <div className="border-borderGrey border-2 h-full">
           <Nav />
+          <div>
+            <Utility />
+          </div>
         </div>
       </div>
     </div>

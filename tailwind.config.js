@@ -5,6 +5,8 @@ module.exports = {
     extend: {
       colors: {
         bgGreen: "#189CA9",
+        borderGrey: "#F1F1F1",
+        greenBgGrey: "#F6F9FA",
       },
       fontFamily: {
         main: " 'Kumbh Sans', sans-serif",

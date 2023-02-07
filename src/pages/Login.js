@@ -33,6 +33,7 @@ const Login = () => {
             const data = {
               email: res.user.email,
               uid: res.user.uid,
+              notes: [],
             };
             setDoc(ref, data)
               .then((res) => {
