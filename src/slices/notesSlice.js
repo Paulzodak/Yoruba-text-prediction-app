@@ -23,39 +23,20 @@ export const getNotes = createAsyncThunk("notes/getNotes", (uid) => {
       return propertyValues;
     })
     .catch((res) => res.data());
-
-  // return onSnapshot(q)
-  //   .then((res) => {
-  //     const tempNotes = res.data();
-  //     const notes2 = { ...tempNotes };
-  //     const propertyValues = Object.values(notes2);
-  //     notes = propertyValues;
-  //     console.log(propertyValues);
-  //     return propertyValues;
-
-  //     // const note3 = [...notes2];
-  //     // return data;
-  //     // getDoc(docRef)
-  //     //   .then((res) => (notes = [...res.data()]))
-  //     //   .catch((res) => res.data());
-  //     // res.docs.forEach((user) => {
-  //     //   console.log(user.data());
-  //     //   if (user.data() === uid) {
-  //     //     console.log(user.data());
-  //     //   }
-  //     // });
-  //   })
-  //   .then((res) => console.log(res));
 });
 const notesSlice = createSlice({
   name: "notes",
   initialState: {
     notes: [],
     loading: false,
+    activeNote: {},
   },
   reducers: {
     setNotes: (state, action) => {
       state.notes = action.payload;
+    },
+    setActiveNote: (state, action) => {
+      state.activeNote = action.payload;
     },
   },
   extraReducers: {
@@ -71,5 +52,5 @@ const notesSlice = createSlice({
     },
   },
 });
-export const {} = notesSlice.actions;
+export const { setActiveNote } = notesSlice.actions;
 export default notesSlice.reducer;

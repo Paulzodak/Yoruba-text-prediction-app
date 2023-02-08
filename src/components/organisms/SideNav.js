@@ -6,9 +6,16 @@ import Search from "../molecules/Search";
 import { auth } from "../../firestore";
 import NoteItem from "../atom/NoteItem";
 import { useSelector } from "react-redux";
-const SideNav = () => {
+import { useDispatch } from "react-redux";
+import { setActiveNote } from "../../slices/notesSlice";
+const SideNav = ({ setShowCreateNote }) => {
+  const dispatch = useDispatch();
   const { notes } = useSelector((state) => state.notes);
-
+  const { activeNote } = useSelector((state) => state.notes);
+  console.log(activeNote);
+  const noteItemHandler = (item) => {
+    dispatch(setActiveNote(item));
+  };
   const Notes = [
     {
       title: "School",
@@ -39,7 +46,7 @@ const SideNav = () => {
   return (
     <div className=" my-[0.5rem] ">
       <div className="px-[1rem]">
-        <Btn text="Create new">
+        <Btn text="Create new" onClick={() => setShowCreateNote(true)}>
           <AddIcon size="2rem" className="inline" color="white" />
         </Btn>
       </div>
@@ -53,7 +60,11 @@ const SideNav = () => {
       <div className="overflow-scroll h-[26rem]">
         {notes.length > 1 ? (
           notes.map((item) => {
-            return <NoteItem data={item} />;
+            return (
+              <div onClick={() => noteItemHandler(item)}>
+                <NoteItem data={item} />
+              </div>
+            );
           })
         ) : (
           <div className="mx-[1rem] mt-[2rem] font-main"> No saved notes.</div>

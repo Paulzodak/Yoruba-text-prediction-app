@@ -12,10 +12,13 @@ import Utility from "../components/organisms/Utility";
 import { getNotes } from "../slices/notesSlice";
 import { collection, doc, onSnapshot, query } from "firebase/firestore";
 import { db } from "../firestore";
+import MainInput from "../components/atom/MainInput";
+import CreateNote from "../components/molecules/CreateNote";
 const Home = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const [loading, setLoading] = useState(true);
+  const [showCreateNote, setShowCreateNote] = useState(false);
   // console.log(user);
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -38,6 +41,7 @@ const Home = () => {
   }, []);
   return (
     <div className="bg-[white] h-[40rem] w-[90%] shadow-2xl mx-auto mt-[2rem]  overflow-hidden">
+      {showCreateNote && <CreateNote setShowCreateNote={setShowCreateNote} />}
       {loading && <Loader />}
       <div className="h-[3rem] bg-[black] px-[2rem] pt-[0.6rem]">
         {/* <div className="grid grid-cols-2"> */}
@@ -48,13 +52,14 @@ const Home = () => {
       </div>
       <div className="grid grid-cols-[30%_70%] h-full">
         <div className="border-borderGrey border-2 h-full">
-          <SideNav />
+          <SideNav setShowCreateNote={setShowCreateNote} />
         </div>
         <div className="border-borderGrey border-2 h-full">
           <Nav />
           <div>
             <Utility />
           </div>
+          <MainInput />
         </div>
       </div>
     </div>
