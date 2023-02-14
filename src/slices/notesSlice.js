@@ -19,7 +19,8 @@ export const getNotes = createAsyncThunk("notes/getNotes", (uid) => {
     .then((res) => {
       const result = res.data();
       const tempNotes = { ...result };
-      const propertyValues = Object.values(tempNotes);
+      const propertyValues = result.notes;
+      console.log(propertyValues);
       return propertyValues;
     })
     .catch((res) => res.data());
