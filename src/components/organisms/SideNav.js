@@ -11,11 +11,12 @@ import { setActiveNote } from "../../slices/notesSlice";
 const SideNav = ({ setShowCreateNote }) => {
   const dispatch = useDispatch();
   const { notes } = useSelector((state) => state.notes);
+  const { loading } = useSelector((state) => state.notes);
   const { activeNote } = useSelector((state) => state.notes);
-  console.log(activeNote);
-  console.log(notes);
   const noteItemHandler = (item) => {
+    console.log("i ran");
     dispatch(setActiveNote(item));
+    console.log(notes);
   };
 
   return (
@@ -32,8 +33,8 @@ const SideNav = ({ setShowCreateNote }) => {
       <hr className="mt-[1rem]" />
       <div className="h-[2.5rem] bg-greenBgGrey w-full" />
       <hr className="" />
-      <div className="overflow-scroll h-[26rem]">
-        {notes.length > 1 ? (
+      <div className="overflow-scroll h-[26rem] px-2">
+        {notes.length > 0 ? (
           notes.map((item) => {
             return (
               <div onClick={() => noteItemHandler(item)}>

@@ -10,7 +10,8 @@ const CreateNote = ({ setShowCreateNote }) => {
   const [title, setTitle] = useState("");
   const { user } = useSelector((state) => state.user);
   const { notes } = useSelector((state) => state.notes);
-  console.log(notes);
+  // console.log("title :" + title);
+  // console.log(notes);
   const dummyColors = [
     {
       id: 0,
@@ -65,18 +66,21 @@ const CreateNote = ({ setShowCreateNote }) => {
   console.log(selectedColor);
   const btnColor = `bg-[${selectedColor}]`;
   const submitHandler = () => {
-    setShowCreateNote(false);
     const tempNotes = [...notes];
     tempNotes.push({
+      id: Math.random(),
       title: title,
       color: selectedColor,
       content: "",
       lastEdit: "",
+      active: false,
     });
     if (selectedColor && title.length > 1) {
+      setShowCreateNote(false);
       const colRef = collection(db, "notes");
       const docRef = doc(db, "notes", user.uid);
       const data = { notes: tempNotes };
+
       updateDoc(docRef, data).then();
 
       console.log("valid");
@@ -118,9 +122,10 @@ const CreateNote = ({ setShowCreateNote }) => {
           onChange={titleHandler}
           className="px-3 font-main w-[80%] h-[2.5rem] rounded-md bg-zinc-100 drop-shadow-sm flex justify-center items-center mx-auto"
         />
+
         <button
           onClick={submitHandler}
-          className={`float-right px-[1.5rem] py-[0.5rem] text-md rounded-md  mt-5 mx-8 text-white font-main ${btnColor} `}
+          className={`float-right px-[1.5rem] py-[0.5rem] text-md rounded-md  mt-5 mx-8 text-white font-main bg-black ${btnColor} `}
         >
           Submit
         </button>

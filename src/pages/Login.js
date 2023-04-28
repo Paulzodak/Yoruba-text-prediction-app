@@ -18,7 +18,6 @@ const Login = () => {
   const navigate = useNavigate();
   const [signInWithGoogle, user, loading] = useSignInWithGoogle(auth);
   const handler = () => {
-    console.log("clicked");
     signInWithGoogle([""], { prompt: "select_account" })
       .then((res) => {
         console.log(res);
@@ -45,24 +44,6 @@ const Login = () => {
           }
         };
         getExists();
-
-        // const ref = collection(db, "users");
-        // const userQuery = query(ref, where("email", "==", res.user.email));
-        // getDocs(userQuery)
-        //   .then((res) => res.exists())
-        //   .catch((e) => console.log(e));
-        // const docRef = doc(db, "users", res.user.uid);
-        // const data = {
-        //   email: res.user.email,
-        //   uid: res.user.uid,
-        // };
-        // setDoc(docRef, data)
-        //   .then((res) => {
-        //     console.log(res);
-        //   })
-        //   .catch((e) => {
-        //     console.log(e);
-        //   });
       })
       .catch((e) => {
         console.log(e);

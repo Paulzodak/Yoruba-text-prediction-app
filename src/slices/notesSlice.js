@@ -17,6 +17,7 @@ export const getNotes = createAsyncThunk("notes/getNotes", (uid) => {
   const q = query(docRef, uid);
   return getDoc(docRef)
     .then((res) => {
+      console.log(res);
       const result = res.data();
       const tempNotes = { ...result };
       const propertyValues = result.notes;
@@ -37,7 +38,20 @@ const notesSlice = createSlice({
       state.notes = action.payload;
     },
     setActiveNote: (state, action) => {
-      state.activeNote = action.payload;
+      // state.activeNote = action.payload;
+      state.notes.filter((item) =>
+        item.id == action.payload.id
+          ? (item.active = true)
+          : (item.active = false)
+      );
+    },
+    setContent: (state, action) => {
+      console.log(action.payload);
+      state.notes.filter((item) => {
+        if (action.payload.id === item.id) {
+          item.content = action.payload.content;
+        }
+      });
     },
   },
   extraReducers: {
@@ -53,5 +67,5 @@ const notesSlice = createSlice({
     },
   },
 });
-export const { setActiveNote } = notesSlice.actions;
+export const { setActiveNote, setContent } = notesSlice.actions;
 export default notesSlice.reducer;
